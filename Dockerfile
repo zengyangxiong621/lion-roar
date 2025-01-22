@@ -1,5 +1,5 @@
 # 依赖安装阶段
-FROM node:18-alpine AS deps
+FROM node:18 AS deps
 WORKDIR /app
 
 # 复制 package.json 和 package-lock.json
@@ -9,7 +9,7 @@ COPY package*.json ./
 RUN npm ci
 
 # 构建阶段
-FROM node:18-alpine AS builder
+FROM node:18 AS builder
 WORKDIR /app
 
 # 复制依赖
@@ -20,7 +20,7 @@ COPY . .
 RUN npm run build
 
 # 生产环境阶段
-FROM node:18-alpine AS runner
+FROM node:18 AS runner
 WORKDIR /app
 
 ENV NODE_ENV=production
