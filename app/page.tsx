@@ -32,7 +32,8 @@ const fetchList = async () => {
       }
       return item;
     });
-  } catch (error) {
+  } catch (err) {
+    console.error(err);
     message.error("获取列表失败");
     return [];
   }
@@ -45,7 +46,8 @@ const deleteItem = async (id: string) => {
       headers: { "Csontent-Type": "application/json" },
     });
     return true;
-  } catch (error) {
+  } catch (err) {
+    console.error(err);
     message.error("删除失败");
     return false;
   }
@@ -62,7 +64,8 @@ const addItem = async (data: Omit<DataType, "id" | "isEditing">) => {
     const result = await response.json();
     console.log("result", result);
     return result;
-  } catch (error) {
+  } catch (err) {
+    console.error(err);
     message.error("添加失败");
     return null;
   }
@@ -210,7 +213,7 @@ export default function Home() {
                 notify_sms: "短信提醒",
                 notify_phone: "电话提醒",
               };
-              return <span id={item}>{map[item as keyof typeof map]}</span>;
+              return <span key={item} id={item}>{map[item as keyof typeof map]}</span>;
             })}
           </Space>
         );
